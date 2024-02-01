@@ -6,7 +6,7 @@
 /*   By: bchanaa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 16:12:22 by bchanaa           #+#    #+#             */
-/*   Updated: 2023/12/15 17:09:05 by bchanaa          ###   ########.fr       */
+/*   Updated: 2024/01/30 17:22:53 by bchanaa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdint.h>
 
 # if BUFFER_SIZE > SIZE_MAX
 #  define BUFFER_SIZE_OK 0
