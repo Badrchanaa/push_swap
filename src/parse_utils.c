@@ -6,7 +6,7 @@
 /*   By: bchanaa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:06:36 by bchanaa           #+#    #+#             */
-/*   Updated: 2024/01/30 15:25:19 by bchanaa          ###   ########.fr       */
+/*   Updated: 2024/02/01 10:28:34 by bchanaa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	*parse_content(void	*content)
 {
-	long	num;
 	int		*new_content;
 	int		sign;
 	int		i;
@@ -32,14 +31,10 @@ void	*parse_content(void	*content)
 	new_content = malloc(sizeof(int));
 	if (!new_content)
 		return (NULL);
-	num = ft_atoi(str);
-	if (num > ((long)INT_MAX + 1))
-		return (NULL);
-	*new_content = num * sign;
+	*new_content = ft_atoi(str) * sign;
 	return (new_content);
 }
 
-// fix leak when num < INT_MIN
 t_list	*parse_list(t_list **lst)
 {
 	t_list	*new_lst;

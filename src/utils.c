@@ -6,7 +6,7 @@
 /*   By: bchanaa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:16:18 by bchanaa           #+#    #+#             */
-/*   Updated: 2024/01/30 15:17:57 by bchanaa          ###   ########.fr       */
+/*   Updated: 2024/02/01 10:21:16 by bchanaa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,26 @@ void	print_list(t_list *lst)
 
 bool	valid_content(char *str)
 {
+	int	i;
+	int	sign;
+
 	while (*str == 32)
 		str++;
 	if (*str == '-' || *str == '+')
-		str++;
+		sign = 44 - *str++;
 	if (*str == 0)
 		return (false);
-	while (*str)
-	{
-		if (!ft_isdigit(*str))
-			return (false);
+	i = 0;
+	while (*str == '0')
 		str++;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i++]))
+			return (false);
 	}
-	return (true);
+	if (ft_strlen(str) != 10)
+		return (ft_strlen(str) < 10);
+	if (sign == -1 && ft_strncmp(str, "2147483648", 10) > 0)
+		return (false);
+	return (sign == -1 || ft_strncmp(str, "2147483647", 10) <= 0);
 }
