@@ -6,7 +6,7 @@
 /*   By: bchanaa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:06:36 by bchanaa           #+#    #+#             */
-/*   Updated: 2024/02/01 10:28:34 by bchanaa          ###   ########.fr       */
+/*   Updated: 2024/02/16 21:17:22 by bchanaa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@ void	*parse_content(void	*content)
 {
 	int		*new_content;
 	int		sign;
-	int		i;
 	char	*str;
 
 	str = (char *)content;
 	sign = 1;
-	i = 0;
 	if (!valid_content(str))
 		return (NULL);
 	while (*str == 32)

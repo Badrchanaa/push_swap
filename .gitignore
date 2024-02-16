@@ -1,4 +1,5 @@
 *.o
 .*.swp
-checker*
+checker
+checker_linux
 push_swap

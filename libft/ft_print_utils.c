@@ -6,7 +6,7 @@
 /*   By: bchanaa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 21:15:28 by bchanaa           #+#    #+#             */
-/*   Updated: 2023/12/15 17:17:30 by bchanaa          ###   ########.fr       */
+/*   Updated: 2024/02/16 21:16:17 by bchanaa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	print_hex(unsigned int nb, t_flags *fl, bool is_upper)
 	char	*tmp;
 	char	*converted;
 
-	if (nb == 0 && fl->maxw == 0 & fl->minw >= 0)
+	if (nb == 0 && fl->maxw == 0 && fl->minw >= 0)
 		tmp = ft_strdup("");
 	else if (is_upper)
 		tmp = ft_itoa_base(nb, HEX_UPPER);
