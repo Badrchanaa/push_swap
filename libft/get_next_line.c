@@ -6,7 +6,7 @@
 /*   By: bchanaa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:47:42 by bchanaa           #+#    #+#             */
-/*   Updated: 2024/01/30 17:26:30 by bchanaa          ###   ########.fr       */
+/*   Updated: 2024/02/01 12:52:51 by bchanaa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ static int	read_next_line(int fd, char **line, size_t line_size)
 	return (0);
 }
 
-#include <stdio.h>
 char	*get_next_line(int fd)
 {
 	static char	*cache_buff;

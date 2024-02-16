@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bchanaa <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/01 12:54:00 by bchanaa           #+#    #+#             */
+/*   Updated: 2024/02/01 12:54:35 by bchanaa          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
@@ -8,7 +20,6 @@
 # define KO 1
 # define VERBOSE 0
 # define SILENT 1
-
 
 void	ft_free_split(char **ar);
 bool	is_duplicate(t_list *lst, int num, int num_index);

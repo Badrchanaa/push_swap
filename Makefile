@@ -1,7 +1,7 @@
 #/usr/bin/make
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I./include -I./libft -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -I./include -I./libft
 LIB_FLAGS = -lft -L./libft
 NAME = push_swap
 CHECKER_NAME = checker
@@ -34,6 +34,7 @@ $(LIBFT_NAME):
 
 clean:
 	rm -f $(OBJS)
+	rm -f $(CHECKER_OBJS)
 	make -C $(LIBFT_DIR) clean
 
 fclean: clean

@@ -6,7 +6,7 @@
 /*   By: bchanaa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 19:16:41 by bchanaa           #+#    #+#             */
-/*   Updated: 2024/01/28 20:34:39 by bchanaa          ###   ########.fr       */
+/*   Updated: 2024/02/16 20:56:59 by bchanaa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <stdint.h>
 # include <limits.h>
 
-long	ft_atoi(const char *str);
+int		ft_atoi(const char *str);
 int		ft_isalnum(int c);
 int		ft_isalpha(int str);
 int		ft_isascii(int c);
