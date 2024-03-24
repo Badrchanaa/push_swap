@@ -6,11 +6,37 @@
 /*   By: bchanaa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:16:18 by bchanaa           #+#    #+#             */
-/*   Updated: 2024/02/01 10:21:16 by bchanaa          ###   ########.fr       */
+/*   Updated: 2024/03/24 00:27:14 by bchanaa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+/*
+ * checks if list is sorted. (asc or desc depending on the sort_mode argument)
+ * if size is positive will check only the first n elements where n = size.
+*/
+bool	is_sorted(t_list *lst, int size, int sort_mode)
+{
+	t_list	*curr;
+	int		*content;
+	int		i;
+
+	curr = lst;
+	i = 0;
+	while ((size < 0 && curr) || (size > 0 && size - i > 0))
+	{
+		content = curr->content;
+		if (!curr->next)
+			break ;
+		if (sort_mode == ASC && *content > *((int *)curr->next->content))
+			return (false);
+		else if (sort_mode == DESC && *content < *((int *)curr->next->content))
+			return (false);
+		curr = curr->next;
+	}
+	return (true);
+}
 
 void	ft_free_split(char **arr)
 {

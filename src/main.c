@@ -6,7 +6,7 @@
 /*   By: bchanaa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 21:19:59 by bchanaa           #+#    #+#             */
-/*   Updated: 2024/02/01 09:50:41 by bchanaa          ###   ########.fr       */
+/*   Updated: 2024/03/23 20:59:19 by bchanaa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int ac, char *av[])
 	if (!lst)
 		return (ft_putendl_fd("Error", 2), 1);
 	print_list(lst);
-//	push_swap(&lst);
+	push_swap(&lst);
 	print_list(lst);
 	ft_lstclear(&lst, free);
 	return (0);

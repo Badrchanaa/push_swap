@@ -3,3 +3,7 @@
 checker
 checker_linux
 push_swap
+bin
+objects
+/libft/libft.a
+/libft/*.o
