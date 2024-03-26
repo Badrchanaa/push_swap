@@ -6,7 +6,7 @@
 /*   By: bchanaa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 00:44:45 by bchanaa           #+#    #+#             */
-/*   Updated: 2024/03/25 03:35:13 by bchanaa          ###   ########.fr       */
+/*   Updated: 2024/03/26 02:40:01 by bchanaa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,95 +21,9 @@
  * done!
 */
 
-int	get_content(t_list *node)
+int	c_rr(int size, int pos)
 {
-	return (*((int *)node->content));
-}
-
-int	get_list_max(t_list *stack, int limit)
-{
-	t_list	*curr;
-	int		max;
-	int		max_pos;
-	int		i;
-
-	max = INT_MIN;
-	max_pos = -1;
-	i = 0;
-	curr = stack;
-	while (curr)
-	{
-		if (get_content(curr) >= max && get_content(curr) <= limit)
-		{
-			max = get_content(curr);
-			max_pos = i;
-		}
-		curr = curr->next;
-		i++;
-	}
-	return (max_pos);
-}
-
-int	get_list_min(t_list *stack, int limit)
-{
-	t_list	*curr;
-	int		min;
-	int		pos;
-	int		i;
-
-	min = INT_MAX;
-	pos = -1;
-	curr = stack;
-	i = 0;
-	while (curr)
-	{
-		if (get_content(curr) <= min && get_content(curr) >= limit)
-		{
-			min = get_content(curr);
-			pos = i;
-		}
-		curr = curr->next;
-		i++;
-	}
-	return (pos);
-}
-
-int	get_sorted_position(t_list *stack, int num, int sort_mode)
-{
-	int	pos;
-
-	if (sort_mode == DESC)
-	{
-		pos = get_list_max(stack, num);
-		if (pos < 0)
-			return (get_list_max(stack, INT_MAX));
-		return (pos);
-	}
-	pos = get_list_min(stack, num);
-	if (pos < 0)
-		return (get_list_min(stack, INT_MIN));
-	return (pos);
-}
-
-int	ft_max(int a, int b)
-{
-	if (a >= b)
-		return (a);
-	return (b);
-}
-
-int	ft_min(int a, int b)
-{
-	if (a < b)
-		return (a);
-	return (b);
-}
-
-int	ft_abs(int a)
-{
-	if (a < 0)
-		return (-a);
-	return (a);
+	return ((size - pos) % size);
 }
 
 unsigned int	get_min_ops(int size_a, int size_b, int pos_a, int pos_b)
@@ -118,11 +32,11 @@ unsigned int	get_min_ops(int size_a, int size_b, int pos_a, int pos_b)
 	int	rrb;
 	int	min;
 
-	rra = size_a - pos_a + 1;
-	rrb = size_b - pos_b + 1;
+	rra = c_rr(size_a, pos_a);
+	rrb = c_rr(size_b, pos_b);
 	min = ft_max(rra, rrb);// rra OR rrb
 	min = ft_min(min, ft_max(pos_a, pos_b)); // (rra||rrb) || (ra || rb)
-	return (ft_min(min, ft_max(rra + pos_b, rrb + pos_a)));// (
+	return (ft_min(min, ft_min(rra + pos_b, rrb + pos_a)));// (
 }
 
 unsigned int	which_ops(int size_a, int size_b, int pos_a, int pos_b)
@@ -131,9 +45,10 @@ unsigned int	which_ops(int size_a, int size_b, int pos_a, int pos_b)
 	int				r;
 	int				rr;
 
-	rr = ft_max(size_a - pos_a + 1, size_b - pos_b + 1);//rra || rrb
+	rr = ft_max(c_rr(size_a, pos_a), c_rr(size_b, pos_b));//rra || rrb
 	r = ft_max(pos_a, pos_b);//RA || RB
-	rxrrx = ft_min(pos_a + size_b - pos_b + 1, pos_b + size_a - pos_a + 1); // rarrb ||  rbrra
+	rxrrx = ft_min(pos_a + c_rr(size_b, pos_b), pos_b + c_rr(size_a, pos_a)); // rarrb ||  rbrra
+	//ft_printf("RR: %d | R: %d | RXRRX: %d\n", rr, r, rxrrx);
 	if (rr < r)
 		if (rxrrx < rr)
 			return (RXRRX);
@@ -151,7 +66,7 @@ void	repeat_op(t_list **stack_a, t_list **stack_b, int count_a, int count_b)
 	int	common_ops;
 	int	tmp;
 
-	ft_printf("-- REPEAT OP: count_a: %d | count_b: %d\n", count_a, count_b);
+	//ft_printf("-- REPEAT OP: count_a: %d | count_b: %d\n", count_a, count_b);
 	if (count_a * count_b > 0)// check if they have the same sign
 		common_ops = ft_min(ft_abs(count_a), ft_abs(count_b));
 	else
@@ -201,20 +116,21 @@ int	push_number(t_list **stack_a, t_list **stack_b, t_num *num)
 
 	size_a = ft_lstsize(*stack_a);
 	size_b = ft_lstsize(*stack_b);
+	//ft_printf("PUSHNUM: SIZE A: %d | SIZE B: %d | POS: %d | NEIGHB: %d\n", size_a, size_b, num->pos, num->b_neighbor);
 	ops_type = which_ops(size_a, size_b, num->pos, num->b_neighbor);
 	pos_a = num->pos;
 	pos_b = num->b_neighbor;
-	ft_printf("	PUSH NUMBER: pos_a: %d, pos_b: %d | size_a %d size_b %d\n", pos_a, pos_b, size_a, size_b);
+	//ft_printf("	PUSH NUMBER: pos_a: %d, pos_b: %d | size_a %d size_b %d\n", pos_a, pos_b, size_a, size_b);
 	if (ops_type == R)
 		repeat_op(stack_a, stack_b, pos_a, pos_b);
 	else if (ops_type == RR)
-		repeat_op(stack_a, stack_b, pos_a - size_a - 1, pos_b - size_b - 1);
+		repeat_op(stack_a, stack_b, -c_rr(size_a, pos_a), -c_rr(size_b, pos_b));
 	if (ops_type == RXRRX)
 	{
-		if (pos_a + size_b - pos_b + 1 < pos_b + size_a - pos_a + 1) // RARRB
-			repeat_op(stack_a, stack_b, pos_a, -pos_b);
+		if (pos_a + c_rr(size_b, pos_b) < pos_b + c_rr(size_a, pos_a)) // RARRB
+			repeat_op(stack_a, stack_b, pos_a, -c_rr(size_b, pos_b));
 		else
-			repeat_op(stack_a, stack_b, pos_a, -pos_b);
+			repeat_op(stack_a, stack_b, -c_rr(size_a, pos_a), pos_b);
 	}
 	px(stack_a, stack_b, VERBOSE, STACK_B);
 	return (0);
@@ -232,7 +148,7 @@ int	push_back(t_list **stack_a, t_list **stack_b, int size_a)
 		if (sorted_pos < size_a / 2)
 			repeat_op(stack_a, stack_b, sorted_pos, 0);
 		else
-			repeat_op(stack_a, stack_b, sorted_pos - size_a, 0);
+			repeat_op(stack_a, stack_b, -c_rr(size_a, sorted_pos), 0);
 		curr = curr->next;
 		px(stack_a, stack_b, VERBOSE, STACK_A);
 		size_a++;
@@ -244,7 +160,6 @@ int	push_back(t_list **stack_a, t_list **stack_b, int size_a)
 		repeat_op(stack_a, stack_b, sorted_pos - size_a, 0);
 	return (0);
 }
-
 void	set_num(t_num *num, int value, int pos, int min_ops)
 {
 	num->value = value;
@@ -268,7 +183,7 @@ int	push_best(t_list **stack_a, t_list **stack_b, int size_a, int size_b)
 	{
 		b_neighbor = get_sorted_position(*stack_b, get_content(curr), DESC);
 		curr_ops = get_min_ops(size_a, size_b, i, b_neighbor);
-		ft_printf("	CURR OPS: %d\n", curr_ops);
+		//ft_printf("	CURR OPS: %d\n", curr_ops);
 		if (curr_ops < optinum.min_ops)
 		{
 			set_num(&optinum, get_content(curr), i, curr_ops);
@@ -277,7 +192,7 @@ int	push_best(t_list **stack_a, t_list **stack_b, int size_a, int size_b)
 		curr = curr->next;
 		i++;
 	}
-	ft_printf("	BEST OPS: %d\n", optinum.min_ops);
+//	ft_printf("	BEST OPS: %d\n", optinum.min_ops);
 	return (push_number(stack_a, stack_b, &optinum));
 }
 
@@ -326,13 +241,17 @@ int	turk_sort(t_list **stack_a, t_list **stack_b)
 
 	size_a = ft_lstsize(*stack_a);
 	size_b = 0;
+	//ft_printf("---- SORT START ---\n");
+	//ft_printf("--> SIZE A: %d || SIZE B: %d\n", size_a, size_b);
 	if (size_a <= 3)
 		return (sort_three(stack_a, STACK_A));
 	px(stack_a, stack_b, VERBOSE, STACK_B);
 	px(stack_a, stack_b, VERBOSE, STACK_B);
 	size_a -= 2;
-	while (size_a > 0)
+	size_b = 2;
+	while (size_a > 3)
 	{
+	//	ft_printf("--> SIZE A: %d || SIZE B: %d\n", size_a, size_b);
 		push_best(stack_a, stack_b, size_a, size_b);
 		size_a--;
 		size_b++;
@@ -342,8 +261,8 @@ int	turk_sort(t_list **stack_a, t_list **stack_b)
 		repeat_op(stack_a, stack_b, 0, sorted_pos);
 	else
 		repeat_op(stack_a, stack_b, 0, sorted_pos - size_b);
-	//sort_three(stack_a, STACK_A);
-	print_list(*stack_b);
-//	push_back(stack_a, stack_b, size_a);
+	sort_three(stack_a, STACK_A);
+	//print_list(*stack_b);
+	push_back(stack_a, stack_b, size_a);
 	return (0);
 }

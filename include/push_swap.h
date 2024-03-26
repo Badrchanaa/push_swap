@@ -6,7 +6,7 @@
 /*   By: bchanaa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:54:00 by bchanaa           #+#    #+#             */
-/*   Updated: 2024/03/24 00:26:48 by bchanaa          ###   ########.fr       */
+/*   Updated: 2024/03/26 01:03:54 by bchanaa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "libft.h"
 # include <stdbool.h>
-
 # define OK 0
 # define KO 1
 # define VERBOSE 0
@@ -82,6 +81,14 @@ void	r_all(t_list **stack_a, t_list **stack_b, int mode);
 void	print_op(t_stackname stack_name, const char *op_name);
 int		turk_sort(t_list **stack_a, t_list **stack_b);
 bool	is_sorted(t_list *lst, int size, int sort_mode);
+
+int	get_content(t_list *node);
+int	get_list_max(t_list *stack, int limit);
+int	get_list_min(t_list *stack, int limit);
+int	get_sorted_position(t_list *stack, int num, int sort_mode);
+int	ft_max(int a, int b);
+int ft_min(int a, int b);
+int	ft_abs(int a);
 
 
 #endif

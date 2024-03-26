@@ -1,14 +1,14 @@
 #/usr/bin/make
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I./include -I./libft -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -I./include -I./libft -g3 # -fsanitize=address
 LIB_FLAGS = -lft -L./libft
 
 NAME = push_swap
 CHECKER_NAME = checker
 
 CHECKER_SOURCES = utils.c parse_utils.c ops_utils.c ops.c checker.c 
-SOURCES = main.c utils.c push_swap.c ops_utils.c ops.c parse_utils.c algo.c
+SOURCES = main.c utils.c push_swap.c ops_utils.c ops.c parse_utils.c algo.c algo_utils.c
 
 OBJS_DIR = bin
 OBJS = $(addprefix $(OBJS_DIR)/, $(SOURCES:.c=.o))
