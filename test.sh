@@ -1,13 +1,13 @@
-max=$(($1 - 1))
-arg="$(shuf -i 0-$max)"
-echo $arg | tr ' ' ', '
-valgrind --log-file=valgrind.txt ./push_swap $arg > out.txt
-echo "Number of ops: "; cat out.txt | wc -l
-./checker_linux $arg < out.txt
-vl=$(cat valgrind.txt | grep "No leaks are possible" | wc -l)
-echo $vl
-if [$vl -gt 0] then
-	echo "No leaks"
-
-	echo "Leaks detected"
-
+ops=0
+count=0
+while [[ $ops -lt 701 ]]
+do
+	arg="$(jot -r 100 -900000000 900000000 | tr '\n' ' ' | awk "{print $1}")"
+	echo $arg | tr ' ' ', '
+	./push_swap $arg > out.txt
+	ops=$(cat out.txt | wc -l)
+	count=$(($count + 1))
+	echo "Number of ops: "; cat out.txt | wc -l
+	echo "Count: " $count
+	./checker_Mac $arg < out.txt
+done;

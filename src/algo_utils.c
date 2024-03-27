@@ -6,8 +6,7 @@
 /*   By: bchanaa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 00:38:21 by bchanaa           #+#    #+#             */
-/*   Updated: 2024/03/26 01:22:12 by bchanaa          ###   ########.fr       */
-/*                                                                            */
+/*   Updated: 2024/03/27 00:41:43 by bchanaa          ###   ########.fr       */
 /* ************************************************************************** */
 
 #include "push_swap.h"
@@ -101,4 +100,21 @@ int	ft_abs(int a)
 	if (a < 0)
 		return (-a);
 	return (a);
+}
+
+int	push_last_elements(t_list **stack_a, t_list **stack_b, int size)
+{
+	int	min_pos;
+
+	while (size > 3)
+	{
+		min_pos = get_list_min(*stack_a, INT_MIN);
+		if (min_pos <= size / 2)
+			repeat_op(stack_a, stack_b, min_pos, 0);
+		else
+			repeat_op(stack_a, stack_b, -c_rr(size, min_pos), 0);
+		px(stack_a, stack_b, VERBOSE, STACK_B);
+		size--;
+	}
+	return (size);
 }

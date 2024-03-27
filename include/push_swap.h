@@ -6,7 +6,7 @@
 /*   By: bchanaa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:54:00 by bchanaa           #+#    #+#             */
-/*   Updated: 2024/03/26 01:03:54 by bchanaa          ###   ########.fr       */
+/*   Updated: 2024/03/27 00:06:32 by bchanaa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,15 @@ typedef struct s_num
 	int	min_ops;
 }			t_num;
 
+//typedef struct s_elem
+//{
+//	int	val;
+//	int	pos;
+//	int	bpos;
+//	int	ops;
+//	int	sorted_pos;
+//}		t_elem;
+
 void	ft_free_split(char **ar);
 bool	is_duplicate(t_list *lst, int num, int num_index);
 void	print_list(t_list *lst);
@@ -79,6 +88,7 @@ void	rrx(t_list **stack, int mode, t_stackname stack_name);
 void	rr_all(t_list **stack_a, t_list **stack_b, int mode);
 void	r_all(t_list **stack_a, t_list **stack_b, int mode);
 void	print_op(t_stackname stack_name, const char *op_name);
+void	repeat_op(t_list **stack_a, t_list **stack_b, int count_a, int count_b);
 int		turk_sort(t_list **stack_a, t_list **stack_b);
 bool	is_sorted(t_list *lst, int size, int sort_mode);
 
@@ -88,7 +98,9 @@ int	get_list_min(t_list *stack, int limit);
 int	get_sorted_position(t_list *stack, int num, int sort_mode);
 int	ft_max(int a, int b);
 int ft_min(int a, int b);
+int	c_rr(int size, int pos);
 int	ft_abs(int a);
+int	push_last_elements(t_list **stack_a, t_list **stack_b, int size);
 
 
 #endif
