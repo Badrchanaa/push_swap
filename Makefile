@@ -7,12 +7,12 @@ LIB_FLAGS = -lft -L./libft
 NAME = push_swap
 CHECKER_NAME = checker
 
-CHECKER_SOURCES = utils.c parse_utils.c ops_utils.c ops.c checker.c 
-SOURCES = main.c utils.c push_swap.c ops_utils.c ops.c parse_utils.c algo.c algo_utils.c
+CHECKER_SOURCES = utils.c parse_utils.c ops_utils.c ops.c ops2.c checker.c 
+SOURCES = main.c utils.c push_swap.c ops_utils.c ops.c ops2.c parse_utils.c algo.c algo_utils.c algo_utils2.c
 
 OBJS_DIR = bin
 OBJS = $(addprefix $(OBJS_DIR)/, $(SOURCES:.c=.o))
-CHECKER_OBJS = $(CHECKER_SOURCES:.c=.o)
+CHECKER_OBJS = $(addprefix $(OBJS_DIR)/, $(CHECKER_SOURCES:.c=.o))
 
 HEADERS = push_swap.h
 
@@ -44,6 +44,7 @@ $(OBJS_DIR)/%.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJS): | $(OBJS_DIR)
+$(CHECKER_OBJS): | $(OBJS_DIR)
 
 clean:
 	rm -f $(OBJS)

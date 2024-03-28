@@ -5,8 +5,9 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bchanaa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/26 00:38:21 by bchanaa           #+#    #+#             */
-/*   Updated: 2024/03/27 00:41:43 by bchanaa          ###   ########.fr       */
+/*   Created: 2024/03/28 00:46:29 by bchanaa           #+#    #+#             */
+/*   Updated: 2024/03/28 00:49:50 by bchanaa          ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
@@ -79,27 +80,6 @@ int	get_sorted_position(t_list *stack, int num, int sort_mode)
 	if (pos < 0)
 		return (get_list_min(stack, INT_MIN));
 	return (pos);
-}
-
-int	ft_max(int a, int b)
-{
-	if (a >= b)
-		return (a);
-	return (b);
-}
-
-int	ft_min(int a, int b)
-{
-	if (a < b)
-		return (a);
-	return (b);
-}
-
-int	ft_abs(int a)
-{
-	if (a < 0)
-		return (-a);
-	return (a);
 }
 
 int	push_last_elements(t_list **stack_a, t_list **stack_b, int size)

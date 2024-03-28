@@ -6,7 +6,7 @@
 /*   By: bchanaa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:26:18 by bchanaa           #+#    #+#             */
-/*   Updated: 2024/03/24 00:27:13 by bchanaa          ###   ########.fr       */
+/*   Updated: 2024/03/28 01:37:42 by bchanaa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ int	handle_op(char *op, t_list **stack_a, t_list **stack_b)
 		rrx(stack_a, SILENT, STACK_A);
 	else if (!ft_strncmp(op, "rrb\n", ft_strlen(op)))
 		rrx(stack_b, SILENT, STACK_B);
+	else if (!ft_strncmp(op, "ss\n", ft_strlen(op)))
+		ss(stack_a, stack_b, SILENT);
+	else if (!ft_strncmp(op, "rr\n", ft_strlen(op)))
+		r_all(stack_a, stack_b, SILENT);
+	else if (!ft_strncmp(op, "rrr\n", ft_strlen(op)))
+		rr_all(stack_a, stack_b, SILENT);
 	else
 		return (0);
 	return (1);
@@ -45,7 +51,10 @@ int	checker(t_list **stack_a)
 	while (operation)
 	{
 		if (!handle_op(operation, stack_a, &stack_b))
-			return (free(operation), ft_lstclear(&stack_b, free), KO);
+		{
+			ft_putendl_fd("Error", 2);
+			return (free(operation), ft_lstclear(&stack_b, free), ERROR);
+		}
 		free(operation);
 		operation = get_next_line(0);
 	}
@@ -57,18 +66,20 @@ int	checker(t_list **stack_a)
 int	main(int ac, char *av[])
 {
 	t_list	*lst;
+	int		status;
 
 	if (ac == 1)
-		return (1);
+		return (0);
 	lst = args_to_list(ac - 1, av + 1);
 	if (!lst)
 		return (ft_putendl_fd("Error", 2), 1);
 	lst = parse_list(&lst);
 	if (!lst)
 		return (ft_putendl_fd("Error", 2), 1);
-	if (checker(&lst) == OK)
+	status = checker(&lst);
+	if (status == OK)
 		ft_putendl_fd("OK", 1);
-	else
+	else if (status == KO)
 		ft_putendl_fd("KO", 1);
 	ft_lstclear(&lst, free);
 	return (0);

@@ -6,128 +6,38 @@
 /*   By: bchanaa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 00:44:45 by bchanaa           #+#    #+#             */
-/*   Updated: 2024/03/27 01:11:36 by bchanaa          ###   ########.fr       */
+/*   Updated: 2024/03/28 01:17:19 by bchanaa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/*
- * Turk Algorithm:
- * 1: push 2 elements from stackA to stackB
- * 2: for each number, calculate number of operations it would take to push it from A to B.
- * 3: push the number with lowest number of ops * 4: repeat until only 3 elements are left in stack A, then sort them using sort_three()
- * 5: push back to stackA, rotate A as necessary to push num in B in its correct position.
- * done!
-*/
-
-int	c_rr(int size, int pos)
+int	rotate_to_top(t_list **stack_a, t_list **stack_b, t_num *num)
 {
-	return ((size - pos) % size);
-}
-
-unsigned int	get_min_ops(int size_a, int size_b, int pos_a, int pos_b)
-{
-	int	rra;
-	int	rrb;
-	int	min;
-
-	rra = c_rr(size_a, pos_a);
-	rrb = c_rr(size_b, pos_b);
-	min = ft_max(rra, rrb);
-	min = ft_min(min, ft_max(pos_a, pos_b));
-	return (ft_min(min, ft_min(rra + pos_b, rrb + pos_a)));
-}
-
-unsigned int	which_ops(int size_a, int size_b, int pos_a, int pos_b)
-{
-	int				rxrrx;
-	int				r;
-	int				rr;
-
-	rr = ft_max(c_rr(size_a, pos_a), c_rr(size_b, pos_b));
-	r = ft_max(pos_a, pos_b);
-	rxrrx = ft_min(pos_a + c_rr(size_b, pos_b), pos_b + c_rr(size_a, pos_a));
-	if (rr < r)
-		if (rxrrx < rr)
-			return (RXRRX);
-		else
-			return (RR);
-	else
-		if (rxrrx < r)
-			return (RXRRX);
-		else
-			return (R);
-}
-
-void	repeat_op(t_list **stack_a, t_list **stack_b, int count_a, int count_b)
-{
-	int	common_ops;
-	int	tmp;
-
-	if (count_a * count_b > 0)
-		common_ops = ft_min(ft_abs(count_a), ft_abs(count_b));
-	else
-		common_ops = 0;
-	tmp = common_ops;
-	while (common_ops > 0)
-	{
-		if (count_a > 0 || count_b > 0)
-			r_all(stack_a, stack_b, VERBOSE);
-		else if (count_a < 0 || count_b < 0)
-			rr_all(stack_a, stack_b, VERBOSE);
-		common_ops--;
-	}
-	if (count_a < 0)
-		count_a += tmp;
-	else
-		count_a -= tmp;
-	if (count_b < 0)
-		count_b += tmp;
-	else
-		count_b -= tmp;
-	while (count_a != 0)
-	{
-		if (count_a > 0)
-			(count_a--, rx(stack_a, VERBOSE, STACK_A));
-		else
-			(count_a++, rrx(stack_a, VERBOSE, STACK_A));
-	}
-	while (count_b != 0)
-	{
-		if (count_b > 0)
-			(count_b--, rx(stack_b, VERBOSE, STACK_B));
-		else
-			(count_b++, rrx(stack_b, VERBOSE, STACK_B));
-	}
-}
-
-int	push_number(t_list **stack_a, t_list **stack_b, t_num *num)
-{
-	unsigned int	ops_type;
 	int				size_a;
 	int				size_b;
 	int				pos_a;
 	int				pos_b;
+	int				ops[3];
 
+	pos_a = num->pos;
+	pos_b = num->nb_pos;
 	size_a = ft_lstsize(*stack_a);
 	size_b = ft_lstsize(*stack_b);
-	ops_type = which_ops(size_a, size_b, num->pos, num->b_neighbor);
-	pos_a = num->pos;
-	pos_b = num->b_neighbor;
-	if (ops_type == R)
-		repeat_op(stack_a, stack_b, pos_a, pos_b);
-	else if (ops_type == RR)
-		repeat_op(stack_a, stack_b, -c_rr(size_a, pos_a), -c_rr(size_b, pos_b));
-	if (ops_type == RXRRX)
+	ops[0] = ft_max(pos_a, pos_b);
+	ops[1] = ft_max(c_rr(size_a, pos_a), c_rr(size_b, pos_b));
+	ops[2] = ft_min(pos_a + c_rr(size_b, pos_b), pos_b + c_rr(size_a, pos_a));
+	if (ops[1] <= ops[0])
 	{
-		if (pos_a + c_rr(size_b, pos_b) < pos_b + c_rr(size_a, pos_a)) // RARRB
-			repeat_op(stack_a, stack_b, pos_a, -c_rr(size_b, pos_b));
-		else
-			repeat_op(stack_a, stack_b, -c_rr(size_a, pos_a), pos_b);
+		if (ops[1] <= ops[2])
+			return (repeat_op(stack_a, stack_b, \
+					-c_rr(size_a, pos_a), -c_rr(size_b, pos_b)), 0);
 	}
-	px(stack_a, stack_b, VERBOSE, STACK_B);
-	return (0);
+	else if (ops[0] < ops[2])
+		return (repeat_op(stack_a, stack_b, pos_a, pos_b), 0);
+	if (pos_a + c_rr(size_b, pos_b) < pos_b + c_rr(size_a, pos_a))
+		return (repeat_op(stack_a, stack_b, pos_a, -c_rr(size_b, pos_b)), 0);
+	return (repeat_op(stack_a, stack_b, -c_rr(size_a, pos_a), pos_b), 0);
 }
 
 int	push_back(t_list **stack_a, t_list **stack_b, int size_a)
@@ -155,37 +65,32 @@ int	push_back(t_list **stack_a, t_list **stack_b, int size_a)
 	return (0);
 }
 
-void	set_num(t_num *num, int value, int pos, int min_ops)
-{
-	num->value = value;
-	num->pos = pos;
-	num->min_ops = min_ops;
-}
-
 int	push_best(t_list **stack_a, t_list **stack_b, int size_a, int size_b)
 {
 	t_list	*curr;
-	t_num	optinum;
+	t_num	optnum;
 	int		i;
 	int		curr_ops;
-	int		b_neighbor;
+	int		nb_pos;
 
 	i = 0;
 	curr = *stack_a;
-	set_num(&optinum, get_content(curr), 0, INT_MAX);
+	optnum.min_ops = INT_MAX;
 	while (curr)
 	{
-		b_neighbor = get_sorted_position(*stack_b, get_content(curr), DESC);
-		curr_ops = get_min_ops(size_a, size_b, i, b_neighbor);
-		if (curr_ops < optinum.min_ops)
+		nb_pos = get_sorted_position(*stack_b, get_content(curr), DESC);
+		curr_ops = get_min_ops(size_a, size_b, i, nb_pos);
+		if (curr_ops < optnum.min_ops)
 		{
-			set_num(&optinum, get_content(curr), i, curr_ops);
-			optinum.b_neighbor = b_neighbor;
+			optnum.pos = i;
+			optnum.min_ops = curr_ops;
+			optnum.nb_pos = nb_pos;
 		}
 		curr = curr->next;
 		i++;
 	}
-	return (push_number(stack_a, stack_b, &optinum));
+	rotate_to_top(stack_a, stack_b, &optnum);
+	return (px(stack_a, stack_b, VERBOSE, STACK_B), 0);
 }
 
 /*
@@ -198,7 +103,7 @@ int	push_best(t_list **stack_a, t_list **stack_b, int size_a, int size_b)
  * 	3 2 1 -- S && RR
 */
 
-int	sort_three(t_list **stack, t_stackname stack_name)
+int	sort_three(t_list **stack, t_stackname sn)
 {
 	int		size;
 	int		first;
@@ -209,21 +114,21 @@ int	sort_three(t_list **stack, t_stackname stack_name)
 		return (1);
 	size = ft_lstsize(*stack);
 	if (size == 2 && !is_sorted(*stack, -1, ASC))
-		return (sx(stack, VERBOSE, stack_name), 0);
+		return (sx(stack, VERBOSE, sn), 0);
 	if (size != 3 || is_sorted(*stack, -1, ASC))
 		return (1);
 	first = get_content((*stack));
 	second = get_content((*stack)->next);
 	third = get_content((*stack)->next->next);
 	if (third > first && third > second)
-		return (sx(stack, VERBOSE, stack_name), 0);
+		return (sx(stack, VERBOSE, sn), 0);
 	if (is_sorted(*stack, -1, DESC))
-		return (sx(stack, VERBOSE, stack_name), rrx(stack, VERBOSE, stack_name), 0);
+		return (sx(stack, VERBOSE, sn), rrx(stack, VERBOSE, sn), 0);
 	if (first > second && first > third)
-		return (rx(stack, VERBOSE, stack_name), 0);
-	rrx(stack, VERBOSE, stack_name);
+		return (rx(stack, VERBOSE, sn), 0);
+	rrx(stack, VERBOSE, sn);
 	if (first < third)
-		sx(stack, VERBOSE, stack_name);
+		sx(stack, VERBOSE, sn);
 	return (0);
 }
 
@@ -234,11 +139,9 @@ int	turk_sort(t_list **stack_a, t_list **stack_b)
 	int		min_size;
 
 	size_a = ft_lstsize(*stack_a);
-	size_b = 0;
+	min_size = 3;
 	if (size_a > 200)
 		min_size = 50;
-	else
-		min_size = 3;
 	if (size_a <= 3)
 		return (sort_three(stack_a, STACK_A));
 	px(stack_a, stack_b, VERBOSE, STACK_B);

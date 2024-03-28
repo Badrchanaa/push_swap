@@ -6,7 +6,7 @@
 /*   By: bchanaa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 19:16:41 by bchanaa           #+#    #+#             */
-/*   Updated: 2024/02/16 20:56:59 by bchanaa          ###   ########.fr       */
+/*   Updated: 2024/03/28 00:49:43 by bchanaa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 char	*get_next_line(int fd);
 int		ft_printf(const char *s, ...);
 int		ft_atoi_base(char *str, const char *base, int base_len);
+
+int		ft_min(int a, int b);
+int		ft_max(int a, int b);
+long	ft_abs(int a);
 
 typedef struct s_list
 {

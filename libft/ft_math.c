@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   algo_refactor.c                                    :+:      :+:    :+:   */
+/*   ft_math.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bchanaa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/27 03:33:30 by bchanaa           #+#    #+#             */
-/*   Updated: 2024/03/27 03:49:06 by bchanaa          ###   ########.fr       */
+/*   Created: 2024/03/28 00:49:05 by bchanaa           #+#    #+#             */
+/*   Updated: 2024/03/28 00:50:50 by bchanaa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	push_to_b(t_list **stack_a, t_list **stack_b, t_num *num, int size_a)
+int	ft_min(int a, int b)
 {
-	int	size_b;
-	int	rr;
-	int	r;
-	int	rxrrx;
-
-	size_b = ft_lstsize(*stack_b);
+	if (a <= b)
+		return (a);
+	return (b);
 }
 
-void	send_to_top(t_list **stack_a, t_list **stack_b, int ca, int cb)
+int	ft_max(int a, int b)
 {
-	int	i;
+	if (a >= b)
+		return (a);
+	return (b);
+}
 
-	i = 0;
-	while ((ca - i) * (cb - i) > 0)
-	{
-		if (ca > 0)
-			r_all(stack_a, stack_b, VERBOSE);
-		else
-			rr_all(stack_a, stack_b, VERBOSE);
-		i++;
-	}
+long	ft_abs(int a)
+{
+	if (a < 0)
+		return (-(long)a);
+	return (a);
 }
